@@ -12,24 +12,33 @@ import APIKeys from "./pages/APIKeys";
 import Webhooks from "./pages/Webhooks";
 import Monitoring from "./pages/Monitoring";
 import Databases from "./pages/Databases";
+import ErrorPage from "./ErrorPage";
 
-export const router = createBrowserRouter([
+const basename = import.meta.env.BASE_URL || "/";
+
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      Component: AdminLayout,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true, Component: Dashboard },
+        { path: "users", Component: UsersManagement },
+        { path: "subscriptions", Component: Subscriptions },
+        { path: "usage", Component: UsageTracking },
+        { path: "billing", Component: Billing },
+        { path: "integrations", Component: PlatformIntegrations },
+        { path: "reports", Component: Reports },
+        { path: "api-keys", Component: APIKeys },
+        { path: "webhooks", Component: Webhooks },
+        { path: "monitoring", Component: Monitoring },
+        { path: "databases", Component: Databases },
+        { path: "settings", Component: Settings },
+      ],
+    },
+  ],
   {
-    path: "/",
-    Component: AdminLayout,
-    children: [
-      { index: true, Component: Dashboard },
-      { path: "users", Component: UsersManagement },
-      { path: "subscriptions", Component: Subscriptions },
-      { path: "usage", Component: UsageTracking },
-      { path: "billing", Component: Billing },
-      { path: "integrations", Component: PlatformIntegrations },
-      { path: "reports", Component: Reports },
-      { path: "api-keys", Component: APIKeys },
-      { path: "webhooks", Component: Webhooks },
-      { path: "monitoring", Component: Monitoring },
-      { path: "databases", Component: Databases },
-      { path: "settings", Component: Settings },
-    ],
-  },
-]);
+    basename,
+  }
+);
